@@ -36,6 +36,52 @@
       b.addEventListener("click", function () { setLang(b.dataset.setLang, true); });
     });
 
+    // ---------- Google Analytics, only after a yes. Nothing from Google is
+    // loaded, and no cookie is set, until the visitor accepts.
+    var GA_ID = "G-05Y1MEQ9BR";
+    function startAnalytics() {
+      if (window.gtag || !GA_ID) return;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag("js", new Date());
+      window.gtag("config", GA_ID);
+      var tag = document.createElement("script");
+      tag.async = true;
+      tag.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(tag);
+    }
+    function askConsent() {
+      var old = document.querySelector(".consent");
+      if (old) old.remove();
+      var de = root.lang === "de";
+      var policy = (de && root.hasAttribute("data-static") ? "../" : "") + "privacy.html";
+      var box = document.createElement("div");
+      box.className = "consent";
+      box.setAttribute("role", "dialog");
+      box.setAttribute("aria-label", de ? "Cookies" : "Cookies");
+      box.innerHTML = "<p>" + (de
+        ? "Diese Website möchte Google Analytics verwenden, um zu sehen, welche Seiten gelesen werden. Dafür werden Cookies gesetzt. Die App ist davon nicht betroffen. <a href='" + policy + "'>Mehr dazu</a>"
+        : "This website would like to use Google Analytics to see which pages are read. That sets cookies. The app is not affected. <a href='" + policy + "'>More</a>")
+        + "</p><div><button type='button' data-answer='no'>" + (de ? "Nein danke" : "No thanks")
+        + "</button><button type='button' data-answer='yes'>" + (de ? "Einverstanden" : "Accept") + "</button></div>";
+      box.addEventListener("click", function (e) {
+        var answer = e.target.getAttribute && e.target.getAttribute("data-answer");
+        if (!answer) return;
+        try { localStorage.setItem("consent", answer); } catch (err) {}
+        box.remove();
+        if (answer === "yes") startAnalytics();
+        else if (window.gtag) location.reload();   // withdrawn: stop loading it
+      });
+      document.body.appendChild(box);
+    }
+    var consent = null;
+    try { consent = localStorage.getItem("consent"); } catch (e) {}
+    if (consent === "yes") startAnalytics();
+    else if (consent !== "no") askConsent();
+    document.querySelectorAll("[data-consent]").forEach(function (link) {
+      link.addEventListener("click", function (e) { e.preventDefault(); askConsent(); });
+    });
+
     var menu = document.querySelector(".menu");
     if (menu) {
       var bar = menu.parentNode;

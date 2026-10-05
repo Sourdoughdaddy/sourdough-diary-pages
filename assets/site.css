@@ -458,3 +458,10 @@
   .langs a { font: 600 13px/1 var(--sans); color: var(--ink-soft); text-decoration: none; border-radius: 999px; padding: 9px 13px; }
   .langs a[aria-current="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(var(--shadow), .18); }
   @media (max-width: 860px) { .langs a { padding: 8px 10px; } }
+
+  /* ---------- The one question the site asks */
+  .consent { position: fixed; z-index: 50; left: 16px; right: 16px; bottom: 16px; margin-inline: auto; max-width: 520px; padding: 18px 20px; border-radius: 18px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 60px -20px rgba(var(--shadow), .55), 0 0 0 1px var(--rule); font-size: 15px; line-height: 1.5; }
+  .consent p { margin: 0 0 14px; }
+  .consent div { display: flex; gap: 10px; justify-content: flex-end; }
+  .consent button { min-height: 44px; padding: 0 20px; border-radius: 999px; font: 600 15px/1 var(--sans); cursor: pointer; border: 1.5px solid var(--rule); background: transparent; color: var(--ink); }
+  .consent button[data-answer="yes"] { background: var(--terracotta-fill); border-color: transparent; color: var(--on-fill); }
