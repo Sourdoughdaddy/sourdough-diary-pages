@@ -29,7 +29,8 @@
     try { saved = localStorage.getItem("lang"); } catch (e) {}
     var guess = (navigator.language || "en").toLowerCase().indexOf("de") === 0 ? "de" : "en";
     var first = asked === "de" || asked === "en" ? asked : (saved === "de" || saved === "en" ? saved : guess);
-    setLang(first, false);
+    // A published page is one language at one address; the switch is a link.
+    if (!root.hasAttribute("data-static")) setLang(first, false);
 
     document.querySelectorAll("[data-set-lang]").forEach(function (b) {
       b.addEventListener("click", function () { setLang(b.dataset.setLang, true); });
