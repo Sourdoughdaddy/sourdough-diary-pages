@@ -35,6 +35,17 @@
       b.addEventListener("click", function () { setLang(b.dataset.setLang, true); });
     });
 
+    var menu = document.querySelector(".menu");
+    if (menu) {
+      var bar = menu.parentNode;
+      menu.addEventListener("click", function () {
+        menu.setAttribute("aria-expanded", String(bar.classList.toggle("open")));
+      });
+      document.addEventListener("click", function (e) {
+        if (!bar.contains(e.target)) { bar.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }
+      });
+    }
+
     // ---------- Scroll story. Layout is read once a frame and handed to
     // CSS as numbers between 0 and 1; the stylesheet does the drawing.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -121,6 +132,7 @@
         });
       }
 
+      extras();
       r = rise.getBoundingClientRect();
       if (r.top < vh && r.bottom > 0) rise.style.setProperty("--t", ease(span(r.top, vh, vh * 0.25)).toFixed(4));
 

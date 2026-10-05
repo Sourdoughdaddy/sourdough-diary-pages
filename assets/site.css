@@ -6,7 +6,7 @@
     --paper-deep: #F2E7D6;
     --ink: #37261B;
     --ink-soft: #6B5442;
-    --terracotta: #A35438;
+    --terracotta: #934C31;
     --terracotta-fill: #C97A5C;
     --on-fill: #2B1A12;
     --rule: rgba(55, 38, 27, .14);
@@ -388,7 +388,7 @@
   html.sx .pan { padding-block: 0; height: 320vh; overflow: visible; }
   html.sx .pan-pin { position: sticky; top: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
   html.sx .pan-rail { overflow: visible; scroll-snap-type: none; transform: translate3d(calc(var(--x, 0) * -1px), 0, 0); will-change: transform; width: max-content; }
-  html.sx .stop { opacity: calc(.25 + var(--on, 0) * .75); transition: opacity .4s var(--ease); }
+  html.sx .stop { opacity: calc(.5 + var(--on, 0) * .5); transition: opacity .4s var(--ease); }
   html.sx .stop time { transform: translateY(calc((1 - var(--on, 0)) * 14px)); transition: transform .5s var(--ease); }
   @media (max-width: 860px) {
     .stop { flex-basis: 72vw; }
@@ -435,3 +435,22 @@
     .nav-links a { font-size: 13px; }
   }
   .tent-band h2 em { color: var(--tent-gold); }
+
+  /* ---------- Home: your diary stays yours */
+  .yours { padding-block: clamp(72px, 10vw, 130px) 0; }
+  .yours .lede { max-width: 40ch; }
+  .yours p.body { margin: 16px 0 0; color: var(--ink-soft); max-width: 46ch; text-wrap: pretty; }
+  html.sx .story + .pan { margin-top: -1px; }
+
+  /* ---------- Phone header: the pages fold into a menu */
+  .menu { display: none; }
+  @media (max-width: 860px) {
+    .nav { position: relative; }
+    .brand span { display: inline; }
+    .menu { display: inline-flex; align-items: center; min-height: 44px; margin-left: auto; padding: 0 14px; border: 0; border-radius: 999px; background: var(--paper-deep); color: var(--ink); font: 600 14px/1 var(--sans); cursor: pointer; }
+    .nav-links { display: none; position: absolute; z-index: 20; top: 64px; left: var(--gutter); right: var(--gutter); margin: 0; flex-direction: column; gap: 0; padding: 8px 18px; border-radius: 18px; background: var(--paper); box-shadow: 0 24px 50px -20px rgba(var(--shadow), .5), 0 0 0 1px var(--rule); }
+    .nav.open .nav-links { display: flex; }
+    .nav-links a { font-size: 17px; padding: 14px 0; border-top: 1px solid var(--rule); }
+    .nav-links a:first-child { border-top: 0; }
+  }
+  @media (max-width: 380px) { .brand span { display: none; } }
