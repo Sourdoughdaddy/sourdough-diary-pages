@@ -502,3 +502,31 @@
   .text-links a::after { content: " \2192"; }
 
   @media (max-width: 1080px) and (min-width: 861px) { .nav-links { gap: 16px; } .nav-links a { font-size: 14px; } .brand span { display: none; } }
+
+  /* ---------- Blog overview: the newest post wide, the rest as cards */
+  .blog { padding-block: clamp(28px, 6vw, 72px) clamp(40px, 6vw, 72px); }
+  .blog h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); }
+  .blog .bite { font: 500 clamp(1.15rem, 1.8vw, 1.4rem)/1.45 var(--serif); margin: 12px 0 clamp(28px, 4vw, 48px); max-width: 40ch; }
+  .post-card { display: flex; flex-direction: column; gap: 18px; text-decoration: none; color: var(--ink); }
+  .post-pic { display: block; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; background: var(--paper-deep); box-shadow: 0 30px 50px -30px rgba(var(--shadow), .5); }
+  .post-pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+  .post-pic.plain { display: grid; place-items: center; }
+  .post-pic.plain img { width: 96px; height: 96px; border-radius: 22px; }
+  .post-card:hover .post-pic:not(.plain) img { transform: scale(1.03); }
+  .post-text { display: block; }
+  .post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 14px; color: var(--ink-soft); }
+  .post-cat { padding: 6px 12px; border-radius: 999px; background: rgba(201, 122, 92, .18); color: var(--terracotta); font-weight: 600; }
+  .post-card strong { display: block; margin-top: 12px; font: 600 1.45rem/1.25 var(--serif); letter-spacing: -.01em; text-wrap: balance; }
+  .post-card:hover strong { color: var(--terracotta); }
+  .post-excerpt { display: block; margin-top: 8px; color: var(--ink-soft); line-height: 1.55; max-width: 52ch; }
+  .post-card.feature { flex-direction: row; align-items: center; gap: clamp(24px, 5vw, 64px); }
+  .post-card.feature .post-pic { flex: 1.15; aspect-ratio: 3 / 2; }
+  .post-card.feature .post-text { flex: 1; }
+  .post-card.feature strong { font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.15; }
+  .post-card.feature .post-excerpt { font-size: 1.1rem; }
+  .post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 4vw, 48px); margin-top: clamp(48px, 7vw, 88px); }
+  @media (max-width: 860px) {
+    .post-card.feature { flex-direction: column; align-items: stretch; }
+    .post-card.feature .post-pic { flex: none; }
+    .post-grid { grid-template-columns: 1fr; }
+  }
