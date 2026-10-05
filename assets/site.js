@@ -82,6 +82,39 @@
       link.addEventListener("click", function (e) { e.preventDefault(); askConsent(); });
     });
 
+    // ---------- Starter calculator. The same sums as the app's first guess:
+    // time grows with the square root of the food, and halves per 10 degrees.
+    var calc = document.querySelector("[data-calc]");
+    if (calc) {
+      var outs = {};
+      document.querySelectorAll("[data-out]").forEach(function (el) { outs[el.getAttribute("data-out")] = el; });
+      var now = new Date();
+      calc.fed.value = ("0" + now.getHours()).slice(-2) + ":" + ("0" + now.getMinutes()).slice(-2);
+      var figure = function () {
+        var need = Math.max(0, parseFloat(calc.need.value) || 0) + (calc.keep.checked ? 20 : 0);
+        var r = parseInt(calc.ratio.value, 10);
+        var target = Math.round(need * 1.1 * 100) / 100;
+        var exact = Math.max(1, Math.ceil(target / (1 + 2 * r)));
+        var starter = Math.max(exact, 10);
+        var flour = Math.ceil(starter * r);
+        outs.starter.textContent = starter + " g";
+        outs.flour.textContent = flour + " g";
+        outs.water.textContent = flour + " g";
+        outs.total.textContent = (starter + 2 * flour) + " g";
+        outs.min.hidden = starter === exact;
+        var base = parseFloat(calc.base.value) || 4, temp = parseFloat(calc.temp.value) || 22;
+        var hours = base * Math.sqrt(r) * Math.pow(2, -(temp - 22) / 10);
+        var h = Math.floor(hours), m = Math.round((hours - h) * 60 / 5) * 5;
+        if (m === 60) { h += 1; m = 0; }
+        outs.hours.textContent = h + " h" + (m ? " " + m + " min" : "");
+        var t = (calc.fed.value || "08:00").split(":");
+        var peak = new Date(2000, 0, 1, +t[0], +t[1] + Math.round(hours * 60));
+        outs.clock.textContent = ("0" + peak.getHours()).slice(-2) + ":" + ("0" + peak.getMinutes()).slice(-2);
+      };
+      calc.addEventListener("input", figure);
+      figure();
+    }
+
     var menu = document.querySelector(".menu");
     if (menu) {
       var bar = menu.parentNode;
