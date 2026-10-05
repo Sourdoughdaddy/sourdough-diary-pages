@@ -530,3 +530,14 @@
     .post-card.feature .post-pic { flex: none; }
     .post-grid { grid-template-columns: 1fr; }
   }
+
+  /* ---------- Who wrote it */
+  .author { display: flex; gap: 18px; align-items: flex-start; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .author img { width: 72px; height: 72px; flex: none; margin: 0; border-radius: 50%; object-fit: cover; box-shadow: none; }
+  .author p { margin: 0; max-width: 52ch; }
+  .author .author-label { font-size: 14px; color: var(--ink-soft); }
+  .author .author-name { font: 600 1.25rem/1.3 var(--serif); }
+  .author .author-bio { margin-top: 6px; font-size: 1rem; line-height: 1.55; color: var(--ink-soft); }
+
+  /* The travelling rail is wider than the page; its container must not grow with it. */
+  .pan-pin > .wrap { width: 100%; min-width: 0; }
